@@ -4,33 +4,6 @@ const app = express()
 const morgan = require('morgan')
 const cors = require('cors')
 const Person = require('./models/person')
-/*
-const mongoose = require('mongoose')
-
-const password = process.argv[2]
-const name = process.argv[3]
-const number = process.argv[4]
-
-const url =
-    `mongodb+srv://puhelinluettelo:fullstack@puhelinluettelo-hopos.mongodb.net/puhelinluettelo?retryWrites=true`
-
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
-
-const personSchema = new mongoose.Schema({
-    Name: String,
-    Number: String,
-})
-
-personSchema.set('toJSON', {
-    transform: (document, returnedObject) => {
-      returnedObject.id = returnedObject._id.toString()
-      delete returnedObject._id
-      delete returnedObject.__v
-    }
-  })
-
-const Person = mongoose.model('Person', personSchema)
-*/
 
 app.use(cors())
 app.use(express.static('build'))
@@ -96,9 +69,11 @@ app.delete('/api/persons/:id', (request, response) => {
     response.status(204).end()
 })
 
+/*
 const generateId = () => {
     return Math.floor(Math.random() * Math.floor(100))
 }
+*/
 
 app.post('/api/persons', (request, response) => {
     const body = request.body
