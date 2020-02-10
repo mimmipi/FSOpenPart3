@@ -1,3 +1,3 @@
 # FSOpenPart3
 
-Linkki sovellukseen: http://puhelinluetteloharjoitus.herokuapp.com/api/persons
+Linkki sovellukseen: http://puhelinluetteloharjoitus.herokuapp.com/
