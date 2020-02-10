@@ -19,6 +19,14 @@ const personSchema = new mongoose.Schema({
     Number: String,
 })
 
+personSchema.set('toJSON', {
+    transform: (document, returnedObject) => {
+      returnedObject.id = returnedObject._id.toString()
+      delete returnedObject._id
+      delete returnedObject.__v
+    }
+  })
+
 const Person = mongoose.model('Person', personSchema)
 
 
@@ -58,16 +66,11 @@ app.get('/', (req, res) => {
     res.send('<h1>This is a header!</h1>')
 })
 
-/*
-app.get('/api/persons', (req, res) => {
-    res.json(persons)
-}) */
-
 app.get('/api/persons', (req, res) => {
     Person.find({}).then(persons => {
-      res.json(persons)
-    })
-  })
+      res.json(persons.map(person => person.toJSON()))
+    });
+  });
 
 app.get('/info', (req, res) => {
     res.send(amount)
