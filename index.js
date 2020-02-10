@@ -4,13 +4,13 @@ const app = express()
 const morgan = require('morgan')
 const cors = require('cors')
 const Person = require('./models/person')
-
-const mongoose = require('mongoose')
 /*
+const mongoose = require('mongoose')
+
 const password = process.argv[2]
 const name = process.argv[3]
 const number = process.argv[4]
-/*
+
 const url =
     `mongodb+srv://puhelinluettelo:fullstack@puhelinluettelo-hopos.mongodb.net/puhelinluettelo?retryWrites=true`
 
@@ -28,7 +28,7 @@ personSchema.set('toJSON', {
       delete returnedObject.__v
     }
   })
-/*
+
 const Person = mongoose.model('Person', personSchema)
 */
 
