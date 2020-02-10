@@ -3,6 +3,25 @@ const app = express()
 const morgan = require('morgan')
 const cors = require('cors')
 
+const mongoose = require('mongoose')
+
+const password = process.argv[2]
+const name = process.argv[3]
+const number = process.argv[4]
+
+const url =
+    `mongodb+srv://puhelinluettelo:${password}@puhelinluettelo-hopos.mongodb.net/puhelinluettelo?retryWrites=true&w=majority`
+
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+
+const personSchema = new mongoose.Schema({
+    Name: String,
+    Number: String,
+})
+
+const Person = mongoose.model('Person', personSchema)
+
+
 app.use(cors())
 app.use(express.static('build'))
 app.use(express.json())
@@ -39,9 +58,16 @@ app.get('/', (req, res) => {
     res.send('<h1>This is a header!</h1>')
 })
 
+/*
 app.get('/api/persons', (req, res) => {
     res.json(persons)
-})
+}) */
+
+app.get('/api/persons', (request, response) => {
+    Person.find({}).then(persons => {
+      response.json(persons)
+    })
+  })
 
 app.get('/info', (req, res) => {
     res.send(amount)
