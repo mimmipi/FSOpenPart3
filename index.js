@@ -10,7 +10,7 @@ const name = process.argv[3]
 const number = process.argv[4]
 
 const url =
-    `mongodb+srv://puhelinluettelo:${password}@puhelinluettelo-hopos.mongodb.net/puhelinluettelo?retryWrites=true&w=majority`
+    `mongodb+srv://puhelinluettelo:fullstack@puhelinluettelo-hopos.mongodb.net/puhelinluettelo?retryWrites=true`
 
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
 
@@ -63,9 +63,9 @@ app.get('/api/persons', (req, res) => {
     res.json(persons)
 }) */
 
-app.get('/api/persons', (request, response) => {
-    Person.find({}).then(people => {
-      res.json(people)
+app.get('/api/persons', (req, res) => {
+    Person.find({}).then(persons => {
+      res.json(persons)
     })
   })
 
