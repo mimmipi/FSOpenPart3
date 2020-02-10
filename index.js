@@ -6,7 +6,7 @@ const cors = require('cors')
 const Person = require('./models/person')
 
 const mongoose = require('mongoose')
-
+/*
 const password = process.argv[2]
 const name = process.argv[3]
 const number = process.argv[4]
@@ -71,8 +71,8 @@ app.get('/', (req, res) => {
 app.get('/api/persons', (req, res) => {
     Person.find({}).then(persons => {
       res.json(persons.map(person => person.toJSON()))
-    });
-  });
+    })
+  })
 
 app.get('/info', (req, res) => {
     res.send(amount)
@@ -128,7 +128,7 @@ app.delete('/api/persons/:id', (request, response) => {
     response.json(person)
   })
 
-  const PORT = process.env.PORT || 3001
+  const PORT = process.env.PORT
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
   })

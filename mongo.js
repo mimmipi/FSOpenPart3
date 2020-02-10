@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+/*const mongoose = require('mongoose')
 
 const password = process.argv[2]
 const name = process.argv[3]
@@ -40,3 +40,4 @@ person.save().then(response => {
     console.log('number saved!');
     mongoose.connection.close();
 }) 
+*/
