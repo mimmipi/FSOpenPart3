@@ -70,9 +70,9 @@ app.get('/', (req, res) => {
 
 app.get('/api/persons', (req, res) => {
     Person.find({}).then(persons => {
-      res.json(persons.map(person => person.toJSON()))
+        res.json(persons.map(person => person.toJSON()))
     })
-  })
+})
 
 app.get('/info', (req, res) => {
     res.send(amount)
@@ -92,43 +92,45 @@ app.get('/api/persons/:id', (request, response) => {
 app.delete('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
     persons = persons.filter(person => person.id !== id)
-  
+
     response.status(204).end()
-  })
+})
 
-  const generateId = () => {
-    return  Math.floor(Math.random() * Math.floor(100))
-  }
-  
-  app.post('/api/persons', (request, response) => {
+const generateId = () => {
+    return Math.floor(Math.random() * Math.floor(100))
+}
+
+app.post('/api/persons', (request, response) => {
     const body = request.body
+   // const names = persons.map(m => m.name)
 
-    const names = persons.map(m => m.name)
-
+    if (body.content === undefined) {
+        return response.status(400).json({ error: 'content missing' })
+    }
+/*
     if (names.includes(body.name)) {
         return response.status(400).json({
             error: 'name must be unique'
         })
     }
-  
-    if (!body.name || !body.number) {
-      return response.status(400).json({ 
-        error: 'name or number missing' 
-      })
-    }
-  
-    const person = {
-      name: body.name,
-      number: body.number,
-      id: generateId(),
-    }
-  
-    persons = persons.concat(person)
-  
-    response.json(person)
-  })
 
-  const PORT = process.env.PORT
-  app.listen(PORT, () => {
+    if (!body.name || !body.number) {
+        return response.status(400).json({
+            error: 'name or number missing'
+        })
+    }
+*/
+    const person = new Person({
+        name: body.name,
+        number: body.number,
+    })
+
+    person.save().then(savedNumber => {
+        response.json(savedNumber.toJSON())
+    })
+})
+
+const PORT = process.env.PORT
+app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
-  })
+})
