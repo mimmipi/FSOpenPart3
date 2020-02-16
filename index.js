@@ -10,7 +10,10 @@ app.use(express.static('build'))
 app.use(express.json())
 app.use(morgan('tiny'))
 /*
-let persons = [
+let persons = Person.find({}).then(persons => {
+    res.json(persons.map(person => person.toJSON()))
+})
+ [
     {
         name: "Arto Hellas",
         number: "040-123456",
@@ -37,9 +40,6 @@ const date = new Date()
 
 //let amount = `Phonebook has info for ${numbers} people </br> ${date}`
 
-app.get('/', (req, res) => {
-    res.send('<h1>This is a header!</h1>')
-})
 
 app.get('/api/persons', (req, res) => {
     Person.find({}).then(persons => {
@@ -48,18 +48,21 @@ app.get('/api/persons', (req, res) => {
 })
 
 app.get('/info', (req, res) => {
-    res.send(amount)
+    res.send(persons)
 })
 
 app.get('/api/persons/:id', (request, response) => {   
-    const id = Number(request.params.id)
+    Person.findById(request.params.id).then(person => {
+        response.json(person.toJSON())
+    })
+    /*const id = Number(request.params.id)
     const person = persons.find(person => person.id === id)
 
     if (person) {
         response.json(person)
     } else {
         response.status(404).end()
-    }
+    }*/
 })
 
 app.delete('/api/persons/:id', (request, response) => {
@@ -77,12 +80,12 @@ const generateId = () => {
 
 app.post('/api/persons', (request, response) => {
     const body = request.body
-    const names = persons.map(m => m.name)
+    //const names = persons.map(m => m.name)
 
-    if (body.content === undefined) {
+    if (body.name === undefined || body.number === undefined) {
         return response.status(400).json({ error: 'content missing' })
     }
-
+/*
     if (names.includes(body.name)) {
         return response.status(400).json({
             error: 'name must be unique'
@@ -94,14 +97,14 @@ app.post('/api/persons', (request, response) => {
             error: 'name or number missing'
         })
     }
-
+*/
     const person = new Person({
         name: body.name,
         number: body.number,
     })
 
-    person.save().then(savedNumber => {
-        response.json(savedNumber.toJSON())
+    person.save().then(savedPerson => {
+        response.json(savedPerson.toJSON())
     })
 })
 

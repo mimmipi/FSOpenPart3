@@ -6,7 +6,11 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:ui": "del build && cd Users/mimmi/Desktop/Full stack open/Part 2/puhelinluettelo && npm run build --prod && copy -r build Users/mimmi/Desktop/FSOpen Part 3",
+    "deploy": "git push heroku master",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy",
+    "logs:prod": "heroku logs --tail"
   },
   "author": "Mimmi",
   "license": "MIT",
